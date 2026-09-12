@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Rooby.Api/Rooby.Api.csproj" />
+    <Project Path="src/Rooby.Engine/Rooby.Engine.csproj" />
+    <Project Path="src/Rooby.Runner/Rooby.Runner.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Rooby.Api.Tests/Rooby.Api.Tests.csproj" />
+    <Project Path="tests/Rooby.Engine.Tests/Rooby.Engine.Tests.csproj" />
+    <Project Path="tests/Rooby.Runner.Tests/Rooby.Runner.Tests.csproj" />
+  </Folder>
+</Solution>

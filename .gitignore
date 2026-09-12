@@ -1,0 +1,24 @@
+# .NET
+bin/
+obj/
+*.user
+
+# Node / web
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Editor / OS
+.vs/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+
+# Env / secrets
+.env
+
+# Logs
+*.log
+npm-debug.log*

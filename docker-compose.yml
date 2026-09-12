@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-rooby}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rooby}
+      POSTGRES_DB: ${POSTGRES_DB:-rooby}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - rooby-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rooby} -d ${POSTGRES_DB:-rooby}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  rooby-postgres-data:

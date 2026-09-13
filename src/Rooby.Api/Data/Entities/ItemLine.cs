@@ -3,7 +3,7 @@ using NpgsqlTypes;
 
 namespace Rooby.Api.Data.Entities;
 
-public class ItemLine
+public class ItemLine : IVersionedRow
 {
     public Guid Id { get; set; }
 

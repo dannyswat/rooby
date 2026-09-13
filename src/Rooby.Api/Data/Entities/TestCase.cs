@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace Rooby.Api.Data.Entities;
 
-public class TestCase
+public class TestCase : IVersionedRow
 {
     public Guid Id { get; set; }
 

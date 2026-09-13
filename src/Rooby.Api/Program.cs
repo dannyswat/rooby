@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -7,10 +8,12 @@ using Rooby.Api.Data;
 using Rooby.Api.Profiles;
 using Rooby.Api.Projects;
 using Rooby.Api.Schemas;
+using Rooby.Api.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddDbContext<RoobyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"))
         .UseSnakeCaseNamingConvention()
@@ -21,6 +24,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services.AddScoped<IAccessService, AccessService>();
 builder.Services.AddScoped<ISchemaResolver, SchemaResolver>();
+builder.Services.AddScoped<IVersionStore, VersionStore>();
+builder.Services.AddExceptionHandler<VersioningExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.Configure<LocalAuthOptions>(builder.Configuration.GetSection(LocalAuthOptions.SectionName));
 
 var oidcAuthority = builder.Configuration["Authentication:Oidc:Authority"];
@@ -121,6 +127,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -128,6 +135,7 @@ app.MapAccessEndpoints();
 app.MapProjectEndpoints();
 app.MapProfileEndpoints();
 app.MapSchemaEndpoints();
+app.MapVersioningEndpoints();
 if (!app.Environment.IsProduction() && builder.Configuration.GetValue("Authentication:Local:Enabled", false))
 {
     app.MapLocalAuthEndpoints();

@@ -3,6 +3,7 @@ using System;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
@@ -13,9 +14,11 @@ using Rooby.Api.Data;
 namespace Rooby.Api.Data.Migrations
 {
     [DbContext(typeof(RoobyDbContext))]
-    partial class RoobyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260913041932_MakeVersionForeignKeysDeferrable")]
+    partial class MakeVersionForeignKeysDeferrable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Rooby.Engine\Rooby.Engine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Rooby.Api.Tests" />
+  </ItemGroup>
+
 </Project>

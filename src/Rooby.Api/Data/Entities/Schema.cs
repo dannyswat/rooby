@@ -20,4 +20,6 @@ public class Schema
     public UserLog Created { get; set; } = new();
 
     public UserLog? LastModified { get; set; }
+
+    public Project Project { get; set; } = null!;
 }

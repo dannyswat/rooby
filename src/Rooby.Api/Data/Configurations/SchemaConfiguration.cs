@@ -16,7 +16,7 @@ public sealed class SchemaConfiguration : IEntityTypeConfiguration<Schema>
         builder.Property(s => s.Validity).HasColumnType("daterange").IsRequired();
         builder.Property(s => s.Definition).HasColumnType("jsonb").IsRequired();
 
-        builder.HasOne<Project>()
+        builder.HasOne(s => s.Project)
             .WithMany(p => p.Schemas)
             .HasForeignKey(s => s.ProjectId)
             .OnDelete(DeleteBehavior.Restrict);

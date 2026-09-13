@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Rooby.Api.Auth;
 using Rooby.Api.Data;
+using Rooby.Api.Profiles;
+using Rooby.Api.Projects;
+using Rooby.Api.Schemas;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +15,12 @@ builder.Services.AddDbContext<RoobyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"))
         .UseSnakeCaseNamingConvention()
         .AddInterceptors(new PublishedRowImmutabilityInterceptor()));
+builder.Services.AddDataProtection();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 builder.Services.AddScoped<IAccessService, AccessService>();
+builder.Services.AddScoped<ISchemaResolver, SchemaResolver>();
 builder.Services.Configure<LocalAuthOptions>(builder.Configuration.GetSection(LocalAuthOptions.SectionName));
 
 var oidcAuthority = builder.Configuration["Authentication:Oidc:Authority"];
@@ -120,6 +125,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapAccessEndpoints();
+app.MapProjectEndpoints();
+app.MapProfileEndpoints();
+app.MapSchemaEndpoints();
 if (!app.Environment.IsProduction() && builder.Configuration.GetValue("Authentication:Local:Enabled", false))
 {
     app.MapLocalAuthEndpoints();

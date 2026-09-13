@@ -4,4 +4,8 @@
     <PackageReference Include="Celly" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Rooby.Engine.Tests" />
+  </ItemGroup>
+
 </Project>
